@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الألوان للأطفال</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500;600&family=Rubik:wght@800&display=swap">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Noto Sans Arabic', sans-serif;
+            background-color: #ffe1f0;
+        }
+
+        #go-back-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #e67e22;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Noto Sans Arabic', sans-serif !important;
+            z-index: 1000;
+        }
+
+        #go-back-btn:hover {
+            background-color: #d35400;
+        }
+
+        #question-container {
+            text-align: center;
+
+        }
+
+        #color-box {
+            display: inline-block;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+
+        #color-square {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .option-btn,
+        #submit-btn {
+            margin: 5px;
+            padding: 8px 16px;
+            width: 120px;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+            font-family: 'Noto Sans Arabic', sans-serif !important;
+            font-size: large;
+        }
+
+        .option-btn:hover,
+        #submit-btn:hover {
+            background-color: #959595;
+        }
+
+        .option-btn.selected {
+            border-color: #3498db;
+        }
+
+        #submit-btn {
+            font-family: 'Rubik', sans-serif;
+        }
+
+        :lang(ar) {
+            direction: rtl;
+        }
+        #question-label {
+    font-size: large;
+}
+    </style>
+</head>
+<body>
+
+<button id="go-back-btn" onclick="goBack()">العودة</button>
+
+<div id="question-container">
+    <div id="color-box">
+        <div id="color-square"></div>
+    </div>
+    <p id="question-label"></p>
+    <button class="option-btn" onclick="selectOption(this)"></button>
+    <button class="option-btn" onclick="selectOption(this)"></button>
+    <button class="option-btn" onclick="selectOption(this)"></button>
+    <button class="option-btn" onclick="selectOption(this)"></button>
+    <br>
+    <button id="submit-btn" onclick="checkAnswer()">تقديم الجواب</button>
+</div>
+
+<script>
+    const colorMappings = {
+        'أحمر': 'red',
+        'أزرق': 'blue',
+        'أخضر': 'green',
+        'أصفر': 'yellow',
+        'برتقالي': 'orange',
+        'بنفسجي': 'purple'
+    };
+
+    const colors = Object.keys(colorMappings);
+    let currentColorIndex = 0;
+    let correctBtnIndex = 0;
+    let shuffledOptions = [];
+    let correctSound = new Audio('../sound/click.mp3');
+    let incorrectSound = new Audio('../sound/wrong.mp3');
+
+    function generateQuestion() {
+        const colorSquare = document.getElementById('color-square');
+        const questionLabel = document.getElementById('question-label');
+        const options = document.querySelectorAll('.option-btn');
+
+        currentColorIndex = Math.floor(Math.random() * colors.length);
+        const selectedColor = colorMappings[colors[currentColorIndex]];
+
+        colorSquare.style.backgroundColor = selectedColor.toLowerCase();
+        questionLabel.textContent = `ما هو اسم هذا اللون؟`;
+
+        const indices = Array.from({ length: options.length }, (_, i) => i);
+        shuffledOptions = shuffleArray(indices);
+        correctBtnIndex = Math.floor(Math.random() * options.length);
+        shuffledOptions[correctBtnIndex] = currentColorIndex;
+
+        options.forEach((btn, index) => {
+            const optionColorIndex = shuffledOptions[index];
+            btn.textContent = colors[optionColorIndex];
+        });
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function selectOption(btn) {
+        const selectedOption = btn.textContent;
+        const options = document.querySelectorAll('.option-btn');
+
+        options.forEach(option => {
+            option.classList.remove('selected');
+        });
+
+        btn.classList.add('selected');
+    }
+
+    function checkAnswer() {
+        const selectedOption = document.querySelector('.option-btn.selected').textContent;
+        const submitBtn = document.getElementById('submit-btn');
+
+        if (selectedOption === colors[currentColorIndex]) {
+            submitBtn.style.backgroundColor = '#4CAF50';
+            correctSound.play();
+
+            setTimeout(() => {
+                submitBtn.style.backgroundColor = '#fff';
+                generateQuestion();
+            }, 1000);
+        } else {
+            submitBtn.style.backgroundColor = '#FF5733';
+            incorrectSound.play();
+        }
+    }
+
+    generateQuestion();
+
+    function goBack() {
+        window.location.href = '../index.html';
+    }
+</script>
+
+</body>
+</html>

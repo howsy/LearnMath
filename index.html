@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500;600&family=Rubik:wght@800&display=swap">
+  <link rel="stylesheet" href="style.css"> <!-- Include your custom styles here -->
+  <title>الحقيبة التعليمية</title>
+  <style>
+    body {
+      font-family: 'Noto Sans Arabic', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffe1f0; /* Light pink background color */
+    }
+
+    .main-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 100vh;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .left {
+      text-align: center;
+    }
+
+    .title {
+      font-size: 28px;
+      color: #333;
+    }
+
+    a {
+      display: block;
+      margin: 15px 0;
+      padding: 10px;
+      font-size: 20px;
+      text-decoration: none;
+      color: #fff;
+      background-color: #3498db; /* Blue button color */
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    a:hover {
+      background-color: #29b930; /* Darker blue on hover */
+    }
+
+    .right {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <img src="images/R.png" alt="Logo Image">
+    <div class="left">
+      <h1 class='title'>اهلا بك في الحقيبة التعليمية</h1>
+      <a href="html/numbers.html" onmouseover="playHoverSound()">تعلم الارقام</a>
+      <a href="html/math/mainMath.html" onmouseover="playHoverSound()">تعلم العمليات الرياضية</a>
+      <a href="html/colors.html" onmouseover="playHoverSound()">تعلم الالوان</a>
+      <a href="html/exam.html" onmouseover="playHoverSound()">اختبار الالوان</a>
+    </div>
+    <div class="right">
+      <img src="images/indexchar.png" alt="Character Image">
+    </div>
+  </div>
+  <audio id="hover-sound" src="sound/h.mp3"></audio>
+  <script src="/script.js"></script>
+  <script>
+    function playHoverSound() {
+      var hoverSound = document.getElementById('hover-sound');
+      hoverSound.currentTime = 0; // Reset sound to the beginning
+      hoverSound.play();
+    }
+  </script>
+</body>
+</html>

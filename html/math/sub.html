@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عملية الطرح</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500;600&family=Rubik:wght@800&display=swap">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe1f0; /* White-pink background color */
+        }
+
+        .calculator-container {
+            text-align: center; /* Center the text within the container */
+        }
+
+        .number-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 10px; /* Add some bottom margin to separate the rows */
+        }
+
+        h2 {
+            font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for the heading */
+            color: #333;
+            font-size: 32px; /* Increase font size to 32px */
+        }
+
+        .number-button {
+            font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for buttons */
+            font-size: 20px;
+            width: 50px; /* Set a fixed width */
+            height: 50px; /* Set a fixed height */
+            margin: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .number-button:hover {
+            background-color: #83e100;
+        }
+
+        .calculate-button {
+            font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for the calculate button */
+            font-size: 32px; /* Increase font size to 32px */
+            background-color: #e74c3c; /* Red color for the subtract button */
+            padding: 10px 60px; /* Adjust the padding as needed */
+            line-height: 1; /* Set line-height to 1 to center the text vertically */
+        }
+
+        .calculate-button:hover {
+            background-color: #c0392b;
+        }
+
+        .result {
+            font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for results */
+            font-size: 32px; /* Increase font size to 32px */
+            margin-top: 20px;
+        }
+
+        #result-label {
+            font-size: 32px; /* Inherit font size from the body */
+            font-family: 'Noto Sans Arabic', sans-serif; /* Inherit font family from the body */
+        }
+
+        /* Style for the image container */
+        .image-container {
+            text-align: center; /* Center the image within its container */
+            margin-left: 20px; /* Add some left margin for separation */
+        }
+
+        /* Style for the image */
+        .monkey-image {
+            width: 350px; /* Set the width to 450px */
+            height: auto; /* Let the height adjust automatically */
+        }
+
+        /* Style for the back button */
+.back-button {
+    font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for the back button */
+    font-size: 24px;
+    background-color: #e75c11; /* Blue color for the back button */
+    color: white;
+    padding: 10px 20px;
+    margin: 20px; /* Add margin to create space from the top and left edges */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    position: fixed; /* Fixed position */
+    top: 0; /* Position from the top */
+    left: 0; /* Position from the left */
+}
+
+.back-button:hover {
+    background-color: #b9af29;
+}
+
+    </style>
+</head>
+<body>
+
+<audio id="click-sound" src="../../sound/hover.mp3"></audio>
+<audio id="calculate-sound" src="../../sound/collect-5930.mp3"></audio>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectedNumbers = [];
+        var resultLabel = document.getElementById('result-label');
+        var clickSound = document.getElementById('click-sound');
+        var calculateSound = document.getElementById('calculate-sound');
+
+        function updateResultLabel() {
+            resultLabel.textContent = selectedNumbers.join(' - ') + '  : الأرقام المختارة ';
+        }
+
+        var numberButtons = document.querySelectorAll('.number-button');
+        numberButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var number = parseInt(button.textContent);
+                selectedNumbers.push(number);
+                updateResultLabel();
+
+                // Play click sound
+                if (clickSound) {
+                    clickSound.currentTime = 0; // Reset sound to the beginning
+                    clickSound.play();
+                }
+            });
+        });
+
+        var calculateButton = document.getElementById('calculate-button');
+        calculateButton.addEventListener('click', function () {
+            var difference = selectedNumbers.reduce(function (acc, num) {
+                return acc - num;
+            });
+
+            var resultElement = document.getElementById('result');
+            resultElement.textContent = difference + ' : النتيجة';
+
+            // Play calculate sound
+            if (calculateSound) {
+                calculateSound.currentTime = 0; // Reset sound to the beginning
+                calculateSound.play();
+            }
+
+            // Clear selected numbers after calculation
+            selectedNumbers = [];
+            updateResultLabel();
+        });
+
+        var backButton = document.getElementById('back-button');
+        backButton.addEventListener('click', function () {
+            // Navigate back to mainMath.html
+            window.location.href = 'mainMath.html';
+        });
+    });
+</script>
+
+<div class="calculator-container">
+    <h2>عملية الطرح</h2>
+
+    <div class="number-buttons">
+        <!-- Buttons for numbers 1 to 5 -->
+        <button class="number-button">1</button>
+        <button class="number-button">2</button>
+        <button class="number-button">3</button>
+        <button class="number-button">4</button>
+        <button class="number-button">5</button>
+    </div>
+    <div class="number-buttons">
+        <!-- Buttons for numbers 6 to 10 -->
+        <button class="number-button">6</button>
+        <button class="number-button">7</button>
+        <button class="number-button">8</button>
+        <button class="number-button">9</button>
+        <button class="number-button">10</button>
+    </div>
+
+    <div>
+        <label id="result-label">  : الأرقام المختارة </label>
+    </div>
+
+    <div>
+        <!-- Calculate button -->
+        <button id="calculate-button" class="calculate-button">طرح</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <!-- Back button -->
+    <button id="back-button" class="back-button">عودة</button>
+</div>
+
+<!-- Image container -->
+<div class="image-container">
+    <img src="../../images/monkey2.png" alt="monkey" class="monkey-image">
+</div>
+
+</body>
+</html>

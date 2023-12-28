@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعلم الارقام</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            transition: background-color 0.5s ease;
+            background-color: #ffe1f0; /* Set your desired default background color */
+
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .number-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .number-btn {
+            font-size: 24px;
+            padding: 20px;
+            margin: 10px;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .number-btn:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .character-img {
+            width: 450px; /* Adjust the width as needed */
+            height: auto;
+        }
+
+        .additional-character-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .additional-character-img {
+            width: 450px; /* Adjust the width as needed */
+            height: auto;
+        }
+
+        #back-to-index {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            font-size: 16px;
+            background-color: #e97510;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: fixed; /* Fixed position */
+            top: 10px; /* Position from the top */
+            left: 10px; /* Position from the left */
+        }
+
+        #back-to-index:hover {
+            background-color: #97e019;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="number-row">
+        <!-- Numbers 1 to 5 -->
+        <button class="number-btn" data-sound="1" onclick="changeCharacter('../images/1.png', '../images/kid.png')">1</button>
+        <button class="number-btn" data-sound="2" onclick="changeCharacter('../images/2.png', '../images/girl1.png')">2</button>
+        <button class="number-btn" data-sound="3" onclick="changeCharacter('../images/3.png', '../images/girl2.png')">3</button>
+        <button class="number-btn" data-sound="4" onclick="changeCharacter('../images/4.png', '../images/kid.png')">4</button>
+        <button class="number-btn" data-sound="5" onclick="changeCharacter('../images/5.png', '../images/girl1.png')">5</button>
+    </div>
+
+    <div id="mediaContainer">
+        <img src="../images/girl1.png" alt="Character Image" class="character-img" id="characterImg">
+        <video id="videoElement" controls autoplay style="width: 780px; height: auto; display: none;"></video>
+    </div>
+    
+    
+    <div class="additional-character-container" id="additionalCharacterContainer">
+        <img src="" class="additional-character-img" id="additionalCharacterImg">
+    </div>
+
+    <div class="number-row">
+        <!-- Numbers 6 to 10 -->
+        <button class="number-btn" data-sound="6" onclick="changeCharacter('../images/6.png', '../images/kid.png')">6</button>
+        <button class="number-btn" data-sound="7" onclick="changeCharacter('../images/7.png', '../images/girl1.png')">7</button>
+        <button class="number-btn" data-sound="8" onclick="changeCharacter('../images/8.png', '../images/girl2.png')">8</button>
+        <button class="number-btn" data-sound="9" onclick="changeCharacter('../images/9.png', '../images/girl1.png')">9</button>
+        <button class="number-btn" data-sound="10" onclick="changeCharacter('../images/10.png', '../images/kid.png')">10</button>
+    </div>
+</div>
+
+<button class="number-btn" id="playVideoBtn">سماع اغنية الارقام</button>
+
+<button id="back-to-index" onclick="goBack()">رجوع</button>
+
+<script>
+    function changeCharacter(mainImagePath, additionalImagePath) {
+        var characterImg = document.getElementById('characterImg');
+        characterImg.src = mainImagePath;
+
+        // Display the additional character image
+        var additionalCharacterImg = document.getElementById('additionalCharacterImg');
+        additionalCharacterImg.src = additionalImagePath;
+        var additionalCharacterContainer = document.getElementById('additionalCharacterContainer');
+        additionalCharacterContainer.style.display = 'block';
+    }
+
+    var body = document.body;
+    var colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+
+    function changeBackgroundColor(index) {
+        if (index < colors.length) {
+            body.style.backgroundColor = colors[index];
+            setTimeout(function () {
+                changeBackgroundColor(index + 1);
+            }, 1500);
+        }
+    }
+
+    document.getElementById('playVideoBtn').addEventListener('click', function () {
+        changeBackgroundColor(0);
+    });
+
+    function goBack() {
+        window.location.href = '../index.html';
+    }
+    
+   document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.number-btn');
+        var clickSound = new Audio('../sound/click.mp3');
+        var currentAudio = null;
+
+        
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                clickSound.play(); // Play the default click sound
+
+                var soundNumber = this.getAttribute('data-sound');
+                playSound(soundNumber);
+            });
+        });
+
+        function playSound(number) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            var audio = new Audio('../sound/' + number + '.mp3');
+            audio.play();
+
+            currentAudio = audio;
+        }
+
+        function changeCharacterAndPlaySound(imagePath) {
+            var soundNumber = event.target.getAttribute('data-sound');
+            var audio = new Audio('../sound/' + soundNumber + '.mp3');
+
+            audio.play();
+        }
+        
+        
+    document.getElementById('playVideoBtn').addEventListener('click', function () {
+        var characterImg = document.getElementById('characterImg');
+        var video = document.getElementById('videoElement');
+        var mediaContainer = document.getElementById('mediaContainer');
+
+        // Toggle visibility of character image and video
+        characterImg.style.display = characterImg.style.display === 'none' ? 'block' : 'none';
+        video.style.display = video.style.display === 'none' ? 'block' : 'none';
+
+        if (video.style.display === 'block') {
+            // Play the video
+            video.src = '../video/song1.mp4'; // Replace with the actual path to your video
+            video.play();
+            playVideoBtn.textContent = 'أيقاف تشغيل الاغنية';
+            video.addEventListener('ended', function () {
+                // Change text content back to default when video ends
+                playVideoBtn.textContent = 'سماع اغنية الارقام';
+            });
+        } else {
+            // Pause and clear the video
+            video.pause();
+            video.src = '';
+            playVideoBtn.textContent = 'سماع اغنية الارقام';
+            characterImg.src = '../images/girl2.png';
+
+
+        }
+
+        
+    });
+    
+    });
+
+    
+
+</script>
+</body>
+
+</html>

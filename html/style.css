@@ -1,0 +1,338 @@
+:root {
+    --sky: #a7cffa;
+    --yellow: #ffdd64;
+    --white: #fff;
+    --dark-green: #14464b;
+    --pink: darksalmon;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-size: 62.5%;
+  background-color: var(--yellow);
+  font-family: sans-serif;
+}
+html, body{
+  height: 100%;
+}
+
+/* Index */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70rem;
+}
+
+.title {
+  font-size: 5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #14464b;
+}
+
+a {
+  text-decoration: none;
+  margin: 0.5rem;
+  color: var(--dark-green);
+  background-color: var(--sky);
+  padding: 0.5rem 3rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 2.4rem;
+}
+
+/* Numbers */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: auto;
+  padding: 20px;
+}
+
+.numbers-header {
+  background-color: #ab931c;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  cursor: pointer;
+  border: 0;
+  border-radius: 0.4rem;
+  color: var(--white);
+  font-size: 1.6rem;
+  padding: 0.8rem;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:focus,
+select:focus {
+  outline: 0;
+}
+
+.btn-toggle {
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.text-box {
+  width: 70%;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -800px);
+  background-color: #333;
+  color: var(--white);
+  padding: 20px;
+  border-radius: 5px;
+  transition: all 1s ease-in-out;
+}
+
+.text-box.show {
+  transform: translate(-50%, 0);
+}
+
+.text-box select {
+  background-color: var(--pink);
+  border: 0;
+  color: var(--white);
+  font-size: 12px;
+  height: 30px;
+  width: 100%;
+}
+
+.text-box textarea {
+  border: 1px #dadada solid;
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 8px;
+  margin: 15px 0;
+  width: 100%;
+  height: 150px;
+}
+
+.text-box .btn {
+  width: 100%;
+}
+
+.text-box .close {
+  float: right;
+  text-align: right;
+  cursor: pointer;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.box {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease-out;
+}
+
+.box.active {
+  box-shadow: 0 0 10px 5px var(--pink);
+}
+
+.box img {
+  width: 100%;
+  object-fit: cover;
+  height: 200px;
+}
+
+.box .info {
+  background-color: var(--pink);
+  color: var(--white);
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  height: 100%;
+}
+
+@media (max-width: 1100px) {
+  main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Math */
+
+.main-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 2rem;
+
+  margin: auto 400px;
+}
+a{
+  text-decoration: none;
+  background-color: var(--sky);
+  padding: 1rem 3rem;
+  border-radius: 1rem;
+  font-size: 2.4rem;
+  font-weight: bold;
+  width: 20rem;
+  text-align: center;
+}
+
+/* summing */
+
+.equations-body {
+  background: var(--sky);
+}
+
+.equation-main-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.equation-container {
+  height: 28rem;
+  width: 26rem;
+  background-color: var(--yellow);
+  border-radius: 1rem;
+}
+
+.equation-container img {
+  width: 20rem;
+  padding: 3rem 0 0 2rem;
+}
+
+.equation-numbers, .choices{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.equation-container, .choices {
+  font-size: 2.8rem;
+  text-align: center;
+} 
+
+.choices {
+  background-color: var(--yellow);
+  min-width: 20rem;
+  border-radius: 1rem;
+}
+
+.num1, .num2 , .output, .choice-1, .choice-2{
+  background-color: var(--white);
+  margin: 2rem;
+  border-radius: 1rem;
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.output {
+  background-color: #e6c7c7;
+}
+
+/* Puzzles */
+.Puzzles-body {
+  background-color: var(--sky);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.puzzle-title {
+  background: #84bfff;
+  border-radius: 1rem;
+  width: 44rem;
+  font-size: 3rem;
+  padding: 0.4rem;
+  text-align: center;
+}
+
+.puzzle {
+  background: #21a2ad;
+  width: 40rem;
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+}
+
+.answers {
+  width: 30rem;
+  height: 10rem;
+  background: #579399;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 1rem;
+  list-style: none;
+}
+
+.answers div {
+  background: var(--pink);
+}
+
+.number-box {
+  width: 5rem;
+  height: 4rem;
+  background: var(--yellow);
+  border-radius: 1rem;
+  font-size: 3rem;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.puzzle > div:last-child {
+  background: var(--white);
+}
+
+.operator, .equal-sign {
+  font-size: 6rem;
+}

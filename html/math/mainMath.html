@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العمليات الرياضية</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500;600&family=Rubik:wght@800&display=swap">
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe1f0; /* White-pink background color */
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        button {
+            font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for buttons */
+            font-size: 20px;
+            width: 150px; /* Set a fixed width */
+            height: 50px; /* Set a fixed height */
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: inline-block; /* Display buttons in a row */
+        }
+
+        button:hover {
+            background-color: #83e100;
+        }
+
+        h2 {
+            font-family: 'Noto Sans Arabic', sans-serif; /* Use the Noto Sans Arabic font for the heading */
+            color: #333;
+        }
+
+        #cartoon-image {
+            width: 450px; /* Set the width of the image */
+            height: auto; /* Maintain the aspect ratio of the image */
+            margin-right: 20px; /* Adjust the right margin as needed */
+        }
+
+        .container {
+            text-align: center; /* Center the text within the container */
+        }
+
+        #back-to-index {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            font-size: 16px;
+            background-color: #bf7b1c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: fixed; /* Fixed position */
+            top: 10px; /* Position from the top */
+            left: 10px; /* Position from the left */
+        }
+
+        #back-to-index:hover {
+            background-color: #73b929;
+        }
+    </style>
+</head>
+<body>
+
+<audio id="hover-sound" src="../../sound/h.mp3"></audio>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('button');
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var soundPath = button.getAttribute('data-sound');
+                if (soundPath) {
+                    var audio = new Audio(soundPath);
+                    audio.play();
+                }
+
+                var nextPage = button.getAttribute('data-href');
+
+                setTimeout(function () {
+                    window.location.href = nextPage;
+                }, 3000); // You can adjust the delay time (in milliseconds)
+            });
+        });
+
+        // Function to navigate back to the index HTML
+        document.getElementById('back-to-index').addEventListener('click', function () {
+            window.location.href = '../../index.html';
+        });
+    });
+</script>
+
+<div class="container">
+    <h2>تعلم العمليات الرياضية</h2>
+
+    <div>
+        <!-- Add the path to your cartoon image -->
+        <img id="cartoon-image" src="../../images/monkey.png" alt="Cartoon Image">
+    </div>
+    <div>
+        <button data-href="sum.html" data-sound="../../sound/sum.mp3">الجمع (+)</button></a>
+        <button data-href="sub.html" data-sound="../../sound/subtract.mp3">الطرح (-)</button></a>
+        <button data-href="multiply.html" data-sound="../../sound/multiplay.mp3">الضرب (*)</button></a>
+        <button data-href="divide.html" data-sound="../../sound/divide.mp3">القسمة (/)</button></a>
+        
+        <button id="back-to-index">العودة</button>
+    </div>
+</div>
+
+</body>
+</html>

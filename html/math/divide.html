@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار الألوان للأطفال</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@500;600&family=Rubik:wght@800&display=swap">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Noto Sans Arabic', sans-serif; /* Set font to Noto Sans Arabic */
+            background-color: #ffe1f0;
+        }
+
+        #question-container {
+            text-align: center;
+        }
+
+        #color-box {
+            display: inline-block;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+
+        #color-square {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .option-btn,
+        #submit-btn {
+            margin: 5px;
+            padding: 8px 16px;
+            width: 120px;
+            cursor: pointer;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff; /* Set background color to white */
+            transition: background-color 0.3s ease; /* Hover transition effect */
+            font-family: 'Noto Sans Arabic', sans-serif !important; /* Set font to Noto Sans Arabic */
+        }
+
+        .option-btn:hover,
+        #submit-btn:hover {
+            background-color: #959595; /* Change the background color on hover */
+        }
+
+        .option-btn.selected {
+            border-color: #3498db;
+        }
+
+        #submit-btn {
+            font-family: 'Rubik', sans-serif;
+        }
+
+        /* Set text direction to right-to-left for Arabic text */
+        :lang(ar) {
+            direction: rtl;
+        }
+    </style>
+</head>
+<body>
+
+<audio id="click-sound" src="../../sound/hover.mp3"></audio>
+<audio id="calculate-sound" src="../../sound/collect-5930.mp3"></audio>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var selectedNumbers = [];
+        var resultLabel = document.getElementById('result-label');
+        var clickSound = document.getElementById('click-sound');
+        var divideSound = document.getElementById('divide-sound');
+        var additionalSound = new Audio('../../sound/no.mp3'); // Replace with your sound file path
+        var cannotDivideSound = new Audio('../../sound/wrong.mp3'); 
+        var calculateSound = document.getElementById('calculate-sound');
+
+        function updateResultLabel() {
+            resultLabel.textContent = selectedNumbers.join(' ÷ ') + '  : الأرقام المختارة ';
+        }
+
+        var numberButtons = document.querySelectorAll('.number-button');
+        numberButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var number = parseInt(button.textContent);
+                selectedNumbers.push(number);
+                updateResultLabel();
+
+                // Play click sound
+                if (clickSound) {
+                    clickSound.currentTime = 0; // Reset sound to the beginning
+                    clickSound.play();
+                }
+            });
+        });
+
+        var calculateButton = document.getElementById('calculate-button');
+        calculateButton.addEventListener('click', function () {
+            if (selectedNumbers.length < 2) {
+                alert('يرجى اختيار رقمين على الأقل للقسمة.');
+                return;
+            }
+
+            var result = selectedNumbers.reduce(function (acc, num, index) {
+                if (index === 0) {
+                    return acc;
+                }
+                return acc / num;
+            });
+
+            var resultElement = document.getElementById('result');
+            if (result < 1) {
+                resultElement.textContent = 'لا يمكن القسمة من الرقم الصغير على الرقم الكبير';
+
+                // Play cannot divide sound
+                if (cannotDivideSound) {
+                    cannotDivideSound.currentTime = 0; // Reset sound to the beginning
+                    cannotDivideSound.play();
+                } 
+                if (additionalSound) {
+                    setTimeout(function () {
+                        additionalSound.currentTime = 0;
+                        additionalSound.play();
+                    }, 500); // Adjust the delay time (in milliseconds) as needed
+                }
+            } else {
+                resultElement.textContent = Math.floor(result) + ' : النتيجة';
+
+                // Play calculate sound
+                if (calculateSound) {
+                    calculateSound.currentTime = 0; // Reset sound to the beginning
+                    calculateSound.play();
+                }
+            }
+
+            // Clear selected numbers after calculation
+            selectedNumbers = [];
+            updateResultLabel();
+        });
+
+        var backButton = document.getElementById('back-button');
+        backButton.addEventListener('click', function () {
+            // Navigate back to mainMath.html
+            window.location.href = 'mainMath.html';
+        });
+
+        // Change the sound for the divide button on click
+        if (divideSound) {
+            calculateButton.addEventListener('click', function () {
+                divideSound.currentTime = 0; // Reset sound to the beginning
+                divideSound.play();
+            });
+        }
+
+    });
+    function goBack() {
+        // Navigate to the index.html page
+        window.location.href = 'index.html';
+    }
+</script>
+
+
+
+<div class="calculator-container">
+    <h2>عملية القسمة</h2>
+
+    <div class="number-buttons">
+        <!-- Buttons for numbers 1 to 5 -->
+        <button class="number-button">1</button>
+        <button class="number-button">2</button>
+        <button class="number-button">3</button>
+        <button class="number-button">4</button>
+        <button class="number-button">5</button>
+    </div>
+    <div class="number-buttons">
+        <!-- Buttons for numbers 6 to 10 -->
+        <button class="number-button">6</button>
+        <button class="number-button">7</button>
+        <button class="number-button">8</button>
+        <button class="number-button">9</button>
+        <button class="number-button">10</button>
+    </div>
+
+    <div>
+        <label id="result-label">  : الأرقام المختارة </label>
+    </div>
+
+    <div>
+        <!-- Calculate button -->
+        <button id="calculate-button" class="calculate-button">قسمة</button>
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <!-- Back button -->
+    <button id="back-button" class="back-button">عودة</button>
+</div>
+
+<!-- Image container -->
+<div class="image-container">
+    <img src="../../images/monkey2.png" alt="monkey" class="monkey-image">
+</div>
+
+</body>
+</html>
